@@ -1,6 +1,6 @@
 # runall step to build CentOS6.5 HVM AMI
 #
-#
+# $Id$
 #
 
 ./setup1_partformat.sh
