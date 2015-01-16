@@ -5,17 +5,25 @@
 
 TDIR=/mnt
 cat > $TDIR/etc/sysconfig/network-scripts/ifcfg-eth0 <<EOF
-CE=eth0
-BOOTPROTO=dhcp
-ONBOOT=yes
-TYPE=Ethernet
-USERCTL=yes
-PEERDNS=yes
-IPV6INIT=no
+DEVICE="eth0"
+BOOTPROTO="dhcp"
+ONBOOT="yes"
+TYPE="Ethernet"
+USERCTL="yes"
+PEERDNS="yes"
+IPV6INIT="no"
 EOF
 
 #
-sed 's/NETWORKING=no/NETWORKING=yes' $TDIR/etc/sysconfig/network
+if [ -f $TDIR/etc/sysconfig/network] 
+    sed 's/NETWORKING=no/NETWORKING=yes' $TDIR/etc/sysconfig/network
+else
+    cat > $TDIR/etc/sysconfig/network <<EOF
+NETWORKING=yes
+HOSTNAME=localhost.localdomain
+NOZEROCONF=yes
+EOF
+fi
 
 #
 cat > $TDIR/etc/rc.local <<EOF
@@ -70,7 +78,7 @@ EOF
 
 # sshd 
 perl -p -i -e 's,^#PermitRootLogin yes,PermitRootLogin without-password,' $TDIR/etc/ssh/sshd_config
-perl -p -i -e 's,^#UseDNS yes,UseDNS no,' etc/ssh/sshd_config
+perl -p -i -e 's,^#UseDNS yes,UseDNS no,' $TDIR/etc/ssh/sshd_config
 perl -p -i -e 's,^PasswordAuthentication yes,PasswordAuthentication no,' $TDIR/etc/ssh/sshd_config
 
 #selinux
