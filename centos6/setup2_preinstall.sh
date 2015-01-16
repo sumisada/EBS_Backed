@@ -41,9 +41,9 @@ wget -O $TDIR/RPM-GPG-KEY-CentOS-6 http://ftp.riken.jp/Linux/centos/RPM-GPG-KEY-
 #Install CentOS 6
 
 cd $TDIR
-search x86_64 yum -y -c $TDIR/repos.conf --installroot=$TDIR --disablerepo=* --enablerepo=ami-base,ami-updates groupinstall Core
-search x86_64 yum -y -c $TDIR/repos.conf --installroot=$TDIR --disablerepo=* --enablerepo=ami-base,ami-updates install kernel 
-search x86_64 yum -y -c $TDIR/repos.conf --installroot=$TDIR --disablerepo=* --enablerepo=ami-base,ami-updates install ruby rsync grub
+setarch x86_64 yum -y -c $TDIR/repos.conf --installroot=$TDIR --disablerepo=* --enablerepo=ami-base,ami-updates groupinstall Core
+setarch x86_64 yum -y -c $TDIR/repos.conf --installroot=$TDIR --disablerepo=* --enablerepo=ami-base,ami-updates install kernel 
+setarch x86_64 yum -y -c $TDIR/repos.conf --installroot=$TDIR --disablerepo=* --enablerepo=ami-base,ami-updates install ruby rsync grub
 rpm -Uvh --root=$TDIR http://s3.amazonaws.com/ec2-downloads/ec2-ami-tools.noarch.rpm
 wget -O $TDIR/usr/bin/ec2-metadata http://s3.amazonaws.com/ec2metadata/ec2-metadata
 chmod +x $TDIR/usr/bin/ec2-metadata
